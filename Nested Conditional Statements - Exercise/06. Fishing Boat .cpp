@@ -1,69 +1,57 @@
 #include <iostream>
+#include <iomanip>
+#include <map>
 #include <string>
 #include <cmath>
-#include <iomanip>
+
+
 
 using namespace std;
 
+int main() {
 
-int main(){
+     double budget, additionalDiscount, totalPrice, moneyLeft, seasonPrice,discount;
+     int numberOfHunters;
+     string season;
 
-    int budjet, fishmans;
-    string sesons;
-    cin >> budjet >> sesons >> fishmans;
+     cin >> budget >> season >> numberOfHunters;
 
-    double result, price = 0;
-    if(sesons == "Spring"){
-        price = 3000;
-        if(fishmans <= 6){
-            result = price - (price * 10.0/100);
-        }else if (7 > fishmans || fishmans <= 11){
-            result = price - (price * 15.0/100);
-        }else if (fishmans >= 12){
-            result = price - (price * 25.0/100);
-        }else if (fishmans % 2 == 0){
-            result = result + 5.0/100;
-        }
-    }else if(sesons == "Summer"){
-        price = 4200;
-        if(fishmans <= 6){
-            result = price - (price * 10.0/100);
-        }else if (7 > fishmans || fishmans <= 11){
-            result = price - (price * 15.0/100);
-        }else if (fishmans >= 12){
-            result = price - (price * 25.0/100);
-        }else if (fishmans % 2 == 0){
-            result = result + 5.0/100;
-        }
-    }else if(sesons == "Autumn"){
-        price = 4200;
-        if(fishmans <= 6){
-            result = price - (price * 10.0/100);
-        }else if (7 > fishmans || fishmans <= 11){
-            result = price - (price * 15.0/100);
-        }else if (fishmans >= 12){
-            result = price - (price * 25.0/100);
-        }
-    }else if(sesons == "Winter"){
-        price = 2600;
-        if(fishmans <= 6){
-            result = price - (price * 10.0/100);
-        }else if (7 > fishmans || fishmans <= 11){
-            result = price - (price * 15.0/100);
-        }else if (fishmans >= 12){
-            result = price - (price * 25.0/100);
-        }else if (fishmans % 2 == 0){
-            result = result + 5.0/100;
-        }
-    }
-    double diferenc = abs(budjet - result);
-    if (budjet >= result){
-        cout << fixed << setprecision(2) << "Yes! You have " << diferenc << " leva left." << endl;
-    }else{
-        cout << fixed << setprecision(2) << "Not enough money! You need " << diferenc << " leva." << endl;
-    }
+     map<string,double> priceOfBoat;
 
+     priceOfBoat["Spring"] = 3000.0;
+     priceOfBoat["Summer"] = 4200.0;
+     priceOfBoat["Autumn"] = 4200.0;
+     priceOfBoat["Winter"] = 2600.0;
 
+        seasonPrice = priceOfBoat.at(season);
+     if(numberOfHunters <= 6) {
+            discount = (double) seasonPrice * 10 / 100.0;
+     }
+     else if(numberOfHunters >= 7 && numberOfHunters <= 11) {
+        discount = (double) seasonPrice * 15 / 100.0;
+     }
+     else if(numberOfHunters >= 12) {
+        discount = (double) seasonPrice * 25 / 100.0;
+     }
+
+        totalPrice = (double) seasonPrice - discount;
+
+     if(numberOfHunters % 2 == 0 && season != "Autumn") {
+        additionalDiscount = (double) totalPrice * 5 / 100.0;
+        totalPrice -= additionalDiscount;
+     }
+
+     moneyLeft = max(budget, totalPrice) - min(budget, totalPrice);
+
+        cout.setf(ios::fixed);
+        cout.precision(2);
+
+     if (budget >= totalPrice){
+        cout<< "Yes! You have " << moneyLeft << " leva left." << endl;
+     }
+     else {
+        cout << "Not enough money! You need "<< moneyLeft << " leva." << endl;
+     }
 
     return 0;
 }
