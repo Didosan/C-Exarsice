@@ -7,7 +7,7 @@ using namespace std;
 int main(){
     int maxNum = INT_MIN;
     int minNum = INT_MAX;
-    string input = " ";
+    int input;
     while ( input != "END"){
             int currentNumber = stoi(input);
     if(currentNumber > maxNum){
